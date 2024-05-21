@@ -15,10 +15,6 @@ interface SectionPageProps {
   params: { bookNo: string };
 }
 
-export function generateStaticParams() {
-  return [{ bookNo: '1000' }];
-}
-
 export default function SectionPage({ params }: SectionPageProps) {
   const path = usePathname();
 
