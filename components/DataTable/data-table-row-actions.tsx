@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { qrCodeSchema } from '@/data/resource/schema';
+import { qrCodeProjectSchema } from '@/data/resource/schema';
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;

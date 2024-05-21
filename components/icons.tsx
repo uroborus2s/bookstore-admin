@@ -28,7 +28,7 @@ import {
   ArrowRightToLine,
   ArrowLeftToLine,
   Maximize,
-  Home,
+  Home, Search, ListFilter,
 } from 'lucide-react';
 
 export type Icon = typeof LucideIcon;
@@ -63,4 +63,6 @@ export const Icons = {
   leftIcon: ArrowLeftToLine,
   maximize: Maximize,
   home: Home,
+  search:Search,
+  listFilter:ListFilter
 };

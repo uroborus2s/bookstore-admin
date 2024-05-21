@@ -21,16 +21,19 @@ export const siteConfig: SiteConfig = {
         Icon: Icons.folders,
         path: '/resource',
         childNode: {
-          upload: { label: '资源上传' },
           qrCode: { label: '二维码管理', path: '/resource/qrCode' },
         },
       },
-      metadata: {
+      meta: {
         label: '元数据管理',
         Icon: Icons.databaseBackup,
+        childNode: {
+          book: { label: '图书管理', path: '/meta/book' },
+          section: { label: '章节管理', path: '/meta/section' },
+        },
       },
-      user: { label: '用户管理', Icon: Icons.user },
-      statistics: { label: '资源统计', Icon: Icons.statistics },
+      // user: { label: '用户管理', Icon: Icons.user },
+      // statistics: { label: '资源统计', Icon: Icons.statistics },
     },
   },
 };

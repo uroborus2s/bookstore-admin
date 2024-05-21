@@ -1,22 +1,7 @@
 'use client';
 
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
+import { flexRender, type Table as TTable } from '@tanstack/react-table';
 import { DataTablePagination } from './data-table-pagination';
-import { DataTableToolbar } from './data-table-toolbar';
-import { Dispatch, SetStateAction, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -25,57 +10,28 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { FC, ReactElement } from 'react';
+import { CircularProgress } from '@/components/ui/circular-progress';
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-  pagination: { pageIndex: number; pageSize: number };
-  pageCount: number;
-  setPagination: Dispatch<
-    SetStateAction<{ pageIndex: number; pageSize: number }>
-  >;
+interface DataTableProps<TData> {
+  table: TTable<TData>;
+  isLoading: boolean;
+  error: Error | null;
+  ToolbarRender: FC<{ table: TTable<TData> }>;
 }
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-  pageCount,
-  pagination,
-  setPagination,
-}: DataTableProps<TData, TValue>) {
-  const [rowSelection, setRowSelection] = useState({});
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [sorting, setSorting] = useState<SortingState>([]);
-
-  const table = useReactTable({
-    data,
-    columns,
-    pageCount,
-    state: {
-      pagination,
-      sorting,
-      columnVisibility,
-      rowSelection,
-      columnFilters,
-    },
-    enableRowSelection: true,
-    onPaginationChange: setPagination,
-    onRowSelectionChange: setRowSelection,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    onColumnVisibilityChange: setColumnVisibility,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-  });
-
+export function DataTable<TData>({
+  table,
+  isLoading,
+  error,
+  ToolbarRender,
+}: DataTableProps<TData>) {
+  if (isLoading) {
+    return <CircularProgress />;
+  }
   return (
     <div className="mt-6 space-y-2">
-      <DataTableToolbar table={table} />
+      <ToolbarRender table={table} />
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -116,7 +72,7 @@ export function DataTable<TData, TValue>({
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={table.getAllColumns().length}
                   className="h-24 text-center"
                 >
                   No results.

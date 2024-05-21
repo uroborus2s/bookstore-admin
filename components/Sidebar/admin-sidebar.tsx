@@ -19,7 +19,7 @@ import Link from 'next/link';
 
 const renderMenuItems = (items: Record<string, MenuTitle>) => {
   return Object.keys(items).map((key) => {
-    const { label, Icon, childNode, path } = items[key];
+    const { label, Icon, childNode, path } = items[key] as MenuTitle;
 
     if (childNode && Object.keys(childNode).length > 0) {
       return (

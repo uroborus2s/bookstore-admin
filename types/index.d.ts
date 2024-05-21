@@ -2,6 +2,15 @@ import { User } from '@prisma/client';
 import { Icons } from '@/components/icons';
 import { type FC } from 'react';
 
+export interface FetchListData<TData> {
+  list?: Array<TData> | null;
+  total?: number | null;
+}
+export interface PageReqVO {
+  pageNo: number;
+  pageSize: number;
+}
+
 export type NavItem = {
   title: string;
   href: string;
@@ -70,3 +79,6 @@ export type UserSubscriptionPlan = SubscriptionPlan &
     stripeCurrentPeriodEnd: number;
     isPro: boolean;
   };
+
+export type Updater<T> = T | ((old: T) => T)
+export type OnChangeFn<T> = (updaterOrValue: Updater<T>) => void

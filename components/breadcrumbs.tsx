@@ -20,7 +20,7 @@ export const getBreadcrumbName = (path: string, map: MenuTitle) => {
   let current = map;
   for (let part of parts) {
     if (current.childNode && current.childNode[part]) {
-      current = current.childNode[part];
+      current = current.childNode[part] as MenuTitle;
     } else {
       return part; // 如果找不到匹配的汉字名称，返回路径部分本身
     }
